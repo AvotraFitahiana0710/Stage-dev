@@ -1,0 +1,112 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+	Dashboard Administrateur
+{% endblock %}
+{% block dashboard %}active{% endblock %}
+{% block content %}
+		<!-- {% if user.is_authenticated %}
+            <h4>Admin connécté(e) : {{ user.username }}</h4>
+            <a href="{% url 'logout_admin' %}">Déconnexion(Admin)</a>    
+        {% endif %} -->
+	<!-- <h2>Dashboard pour l'administrateur</h2> -->
+	<!-- <div>
+		<p>Personnel : {{ nbr_persons }}</p>
+        <p>Département : {{ nbr_department }}</p>
+	</div> -->
+
+<!-- Bootstrap -->
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    </div>
+    <div class="row">
+		<div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Personnel{% if nbr_persons > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_persons }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                            <i class="fa-regular fa-user fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Département{% if nbr_department > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_department }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-th fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if user.role == "Admin" %}
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-dark shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                Compte{% if nbr_account > 1 %}s{% endif %} utilisateur{% if nbr_account > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_account }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-dark shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
+                                Compte{% if connected_users > 1 %}s{% endif %} Connecté{% if connected_users > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ connected_users }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        {% endif %}   	
+    </div>
+    {% if user.role == "Admin" %}
+    <h3>Utilisateurs actuellement connectés :</h3>
+    <div class="row">
+        <ul>
+            {% for user_active in list_active %}
+                <li>{{ user_active }} ({{ user_active.get_role_display }})</li>
+            {% empty %}
+                <li>Aucun utilisateur connecté.</li>
+            {% endfor %}
+        </ul>
+                <!-- Statistiques des comptes. Exemple nombre des comptes admin, manager et employé, graphe ou figurepour une belle vue -->
+    </div>
+    {% endif %}
+    <!-- <div>
+        <p id="total-accounts">Nombre total de comptes : {{ nbr_account }}</p>
+        <p id="admin-count">Nombre d'Admins : {{ nbr_admins }}</p>
+        <p id="manager-count">Nombre de Managers : {{ nbr_managers }}</p>
+        <p id="employee-count">Nombre d'Employés : {{ nbr_employees }}</p>
+    </div> -->
+    
+    
+{% endblock %}

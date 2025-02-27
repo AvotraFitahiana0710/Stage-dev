@@ -1,0 +1,32 @@
+# Fichiers de compilation Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyo
+# Fichier de configuration locale
+.env
+.settings_local.py  # Si tu utilises un fichier de settings spécifique
+
+# Base de données SQLite (si applicable)
+db.sqlite3
+db.sqlite3-journal
+
+# Migrations cachées
+*/migrations/*.pyc
+*/migrations/__pycache__/
+# Cache Django
+staticfiles/
+media/
+# Logs et fichiers temporaires
+*.log
+logs/
+debug.log
+# Fichiers JetBrains (PyCharm)
+.idea/
+
+# Fichiers VSCode
+.vscode/
+
+# Fichiers liés à Node.js (si utilisation de npm/yarn)
+node_modules/
+                                                                                

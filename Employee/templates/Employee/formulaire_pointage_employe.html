@@ -1,0 +1,21 @@
+{% extends 'base_employe.html' %}
+{% load static %}
+{% block title %}
+    Formulaire de poitange employé
+{% endblock %}
+{% block content %}
+    <h1>Ajout pointage</h1>
+    <a href="{% url 'pointage_list_employe' %}">Retour(liste)</a>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">Enregistrer</button>
+    </form>
+
+    
+
+{% endblock %}

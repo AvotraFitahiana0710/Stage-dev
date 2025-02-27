@@ -1,0 +1,16 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Effacer département
+{% endblock %}
+{% block departement %}active{% endblock %}
+{% block liste_departement %}active{% endblock %}
+{% block content %}
+    <h1>Supprimer {{ department.name }}</h1>
+    <p>Êtes-vous sûr de vouloir supprimer cette personne ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Oui, supprimer</button>
+    </form>
+    <a href="{% url 'department_list' %}">Annuler</a>
+{% endblock %}

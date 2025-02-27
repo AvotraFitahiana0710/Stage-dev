@@ -1,0 +1,17 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Ajout Shift
+{% endblock %}
+{% block personnel %}active{% endblock %}
+{% block shift %}active{% endblock %}
+{% block content %}
+    <h1>Ajouter une Shift</h1>
+    <a href="{% url 'shift_list' %}">Retour à la liste</a>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">Ajouter</button>
+    </form>
+
+{% endblock %}

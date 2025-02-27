@@ -1,0 +1,19 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Formulaire de département
+{% endblock %}
+{% block departement %}active{% endblock %}
+{% block liste_departement %}active{% endblock %}
+{% block content %}
+    <!-- <a href="{% url 'person_list' %}">Retour</a> -->
+    <a href="{% url 'department_list' %}">Retour</a>
+
+    <h1>Ajouter/Modifier un département</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">Enregistrer</button>
+    </form>
+
+{% endblock %}

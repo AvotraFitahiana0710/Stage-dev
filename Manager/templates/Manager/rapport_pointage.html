@@ -1,0 +1,94 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Liste des pointages
+{% endblock %}
+{% block rapport %}active{% endblock %}
+{% block content %}
+    
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1>Rapport de pointage</h1>
+        <p>Type de rapport : {{ report_type|title }}</p>
+        <p>Période : Du {{ start_date }} à {{ end_date }}</p>
+    </div>
+    <!-- <form method="get" action="">
+        <label for="report_type">Type de Rapport :</label>
+        <select name="type" id="report_type">
+            <option value="weekly" {% if report_type == 'weekly' %}selected{% endif %}>Hebdomadaire</option>
+            <option value="monthly" {% if report_type == 'monthly' %}selected{% endif %}>Mensuel</option>
+        </select>
+        <button type="submit">Générer le Rapport</button>
+    </form> -->
+    <form method="get" action="">
+        <label for="type">Type de rapport :</label>
+        <select name="type" id="type">
+        <option value="weekly" {% if report_type == 'weekly' %}selected{% endif %}>Hebdomadaire</option>
+        <option value="monthly" {% if report_type == 'monthly' %}selected{% endif %}>Mensuel</option>
+        <option value="custom" {% if report_type == 'custom' %}selected{% endif %}>Personnalisé</option>
+    </select>
+
+        <label for="start_date">Date de début :</label>
+        <input type="date" id="start_date" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
+
+        <label for="end_date">Date de fin :</label>
+        <input type="date" id="end_date" name="end_date" value="{{ end_date|date:'Y-m-d' }}">
+
+        <button type="submit">Générer le rapport</button>
+    </form>
+
+    <!-- <a href="{% url 'add_pointage' %}">Nouvel enregistrement</a> -->
+
+    <!-- Templates bt -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Pointages enregistrées</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Employé(e)</th>
+                            <th>Jours pointés</th>
+                            <th>Heures totales travaillées</th>
+                            <th>Absences</th>
+                            <th>Congés</th>
+                            <th>Retards</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Employé(e)</th>
+                            <th>Jours pointés</th>
+                            <th>Heures totales travaillées</th>
+                            <th>Absences</th>
+                            <th>Congés</th>
+                            <th>Retards</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% if grouped_data %}
+                            {% for data in grouped_data %}
+                                <tr>
+                                    <td>{{ data.person__first_name }}</td>
+                                    <td>{{ data.total_days_worked }}</td>
+                                    <td>{{ data.total_hours|floatformat:2 }}</td>
+                                    <td>{{ data.total_absences }}</td>
+                                    <td>{{ data.total_conge }}</td>
+                                    <td>{{ data.total_late }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Aucun pointage trouvé pour cette période.</td>
+                            </tr>
+                        {% endif %}
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

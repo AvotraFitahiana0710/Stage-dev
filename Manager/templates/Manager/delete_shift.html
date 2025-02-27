@@ -1,0 +1,16 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Effacer Shift
+{% endblock %}
+{% block personnel %}active{% endblock %}
+{% block shift %}active{% endblock %}
+{% block content %}
+    <h1>Supprimer {{ shift.name }}</h1>
+    <p>Êtes-vous sûr de vouloir supprimer cette Shift ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Oui, supprimer</button>
+    </form>
+    <a href="{% url 'shift_list' %}">Annuler</a>
+{% endblock %}

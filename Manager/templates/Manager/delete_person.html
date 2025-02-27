@@ -1,0 +1,16 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Effacer Employé
+{% endblock %}
+{% block personnel %}active{% endblock %}
+{% block liste_personnel %}active{% endblock %}
+{% block content %}
+    <h1>Supprimer {{ person.first_name }} {{ person.last_name }}</h1>
+    <p>Êtes-vous sûr de vouloir supprimer cette personne ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Oui, supprimer</button>
+    </form>
+    <a href="{% url 'person_list' %}">Annuler</a>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base_user.html' %}
+{% load static %}
+{% block title %}
+    Dashboard Utilisateur
+{% endblock %}
+{% block content %}
+<!-- {% if user.is_authenticated %}
+    <p>Utilisateur connecté : {{ user.username }}</p>
+    {% if user.user_account.is_active %}
+        <p>Statut : Actif</p>
+    {% else %}
+        <p>Statut : Inactif</p>
+    {% endif %}
+{% else %}
+    <p>Veuillez vous connecter.</p>
+{% endif %}
+ -->
+
+
+
+
+        <!-- {% if user.is_authenticated %}
+            <h4>Admin connécté(e) : {{ user.username }}</h4>
+            <a href="{% url 'logout_admin' %}">Déconnexion(Admin)</a>    
+        {% endif %} -->
+    <!-- <h2>Dashboard pour l'administrateur</h2> -->
+    <!-- <div>
+        <p>Personnel : {{ nbr_persons }}</p>
+        <p>Département : {{ nbr_department }}</p>
+    </div> -->
+
+<!-- Bootstrap -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    </div>
+    {% if user.role == "Manager" %}
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Personnel{% if nbr_persons > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_persons }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Département{% if nbr_department > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_department }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Compte{% if nbr_account > 1 %}s{% endif %} utilisateur{% if nbr_account > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_account }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->      
+    </div>
+    {% endif %}
+
+    <!-- 
+    Nombre de retards, congés pendant le période en cours
+    Ajout pointage de l'user connécté
+    aucune modification ni suppression
+        
+     -->
+    {% if user.role == "Employee" %}
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Nombre de retard{% if nbr_persons > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_persons }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Nombre de congé{% if nbr_persons > 1 %}s{% endif %} pris{% if nbr_persons > 1 %}s{% endif %}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_persons }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+
+    </div>
+    {% endif %}
+{% endblock %}

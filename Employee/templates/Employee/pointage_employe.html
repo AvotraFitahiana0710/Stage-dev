@@ -1,0 +1,121 @@
+{% extends 'base_employe.html' %}
+{% load static %}
+{% block title %}
+	Formulaire pointage employé
+{% endblock title %}
+{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1>Pointage</h1>
+        <a href="{% url 'add_pointage_employe' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Nouvel enregistrement</a>
+</div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        {% if start_date and end_date %}
+            <p>
+                Rapport de pointage du <strong>{{ start_date }}</strong> au <strong>{{ end_date }}</strong>.
+            </p>
+        {% elif selected_period == "week" %}
+            <p>
+                Rapport hebdomadaire à partir du <strong>{{ start_date }}</strong> au <strong>{{ end_date }}</strong>.
+            </p>
+        {% elif selected_period == "month" %}
+            <p>
+                Rapport mensuel à partir du <strong>{{ start_date }}</strong> au <strong>{{ end_date }}</strong>.
+            </p>
+        {% elif selected_date %}
+            <p>
+                Rapport pour le jour spécifique : <strong>{{ selected_date }}</strong>.
+            </p>
+        {% else %}
+            <p>
+                Aucune plage de dates spécifiée.
+            </p>
+        {% endif %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+
+    <form method="get" class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="row"> 
+            <br>
+            <label for="period">Période :</label>
+            <select name="period" id="period" class="btn btn-outline-info btn-sm dropdown-toggle">
+                <option value="">Toutes les périodes</option>
+                <option value="week" {% if selected_period == 'week' %}selected{% endif %}>Cette semaine</option>
+                <option value="month" {% if selected_period == 'month' %}selected{% endif %}>Ce mois-ci</option>
+                <option value="day" {% if selected_period == 'day' %}selected{% endif %}>Un jour spécifique</option>
+                <option value="day" {% if selected_period == 'custom' %}selected{% endif %}>Période personnalisée</option>
+            </select>
+            <br>
+            
+            <label for="date">Sélectionner une date :</label>
+            <input type="date" name="date" id="date" value="{{ selected_date }}">
+
+            <label for="date_debut">Période du </label>
+            <!-- Champ Date de Début -->
+            <input type="date" name="start_date" value="{{ start_date }}" placeholder="Date de début" id="date_debut">
+            <label for="date_fin"> à </label>
+            <!-- Champ Date de Fin -->
+            <input type="date" name="end_date" value="{{ end_date }}" placeholder="Date de fin" id="date_fin">
+
+            <button type="submit" class="btn btn-sm btn-outline-info">Appliquer</button>
+        </div>
+    </form>
+
+    <!-- <a href="{% url 'add_pointage' %}">Nouvel enregistrement</a> -->
+
+    <!-- Templates bt -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Personnes enregistrées</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Date de pointage</th>
+                            <th>Heure d'arrivé</th>
+                            <th>Heure de départ</th>
+                            <th>Heures travaillées</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Date de pointage</th>
+                            <th>Heure d'arrivé</th>
+                            <th>Heure de départ</th>
+                            <th>Heures travaillées</th>
+                            <th>Statut</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% if records %}
+                            {% for record in records %}        
+                                <tr class="table-{% if person.status == 'inactive' %}danger{% endif %}">
+                                    <td>{{ record.person.first_name }}</td>
+                                    <td>{{ record.date_pointage }}</td>
+                                    <td>{{ record.check_in }}</td>
+                                    <td>{{ record.check_out }}</td>
+                                    <td>{{ record.hours_worked }}</td>
+                                    <td>{{ record.get_status_display }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">Aucun résultat</td>
+                            </tr>
+                        {% endif %}
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fin templates bt -->
+{% endblock %}

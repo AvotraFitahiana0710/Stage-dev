@@ -1,0 +1,104 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Liste des employés
+{% endblock %}
+{% block personnel %}active{% endblock %}
+{% block liste_personnel %}active{% endblock %}
+{% block content %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1>Liste des Personnes</h1>
+        {% if user.role == "Admin" or user.role == "Manager" %}
+            <a href="{% url 'add_person' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Nouvel enregistrement</a>
+        {% endif %}
+    </div>
+    <!-- <table class="table table-striped-columns">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Numéro</th>
+            <th>Actions</th>
+        </tr>
+        {% for person in persons %}
+        <tr class="table-{% if person.status == 'Active' %}light{% else %}warning{% endif %}">
+            <td>{{ person.first_name }}</td>
+            <td>{{ person.last_name }}</td>
+            <td>{{ person.phone_number }}</td>
+            <td>
+                <a href="{% url 'edit_person' person.id %}">Modifier</ion-icon></a>
+                <a href="{% url 'delete_person' person.id %}">Supprimer</ion-icon></a>
+                <a href="{% url 'detail_person' person.id %}">Plus</ion-icon></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table> -->
+
+
+    <!-- Templates bootstrap -->
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Personnes enregistrées</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénoms</th>
+                            <th>Numéro</th>
+                            <th>Statuts</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénoms</th>
+                            <th>Numéro</th>
+                            <th>Statuts</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% if persons %}
+                            {% for person in persons %}
+                            <tr class="table-{% if person.status == 'Inactive' %}danger{% endif %}">
+                                <td>{{ person.first_name }}</td>
+                                <td>{{ person.last_name }}</td>
+                                <td>{{ person.phone_number }}</td>
+                                <td>{{ person.status }}</td>
+                                <td>
+                                    <!-- <a href="{% url 'edit_person' person.id %}">Modifier</ion-icon></a>
+                                    <a href="{% url 'delete_person' person.id %}">Supprimer</ion-icon></a>
+                                    <a href="{% url 'detail_person' person.id %}">Plus</ion-icon></a> -->
+                                    <!-- mod -->
+                                    {% if user.role == "Admin" or user.role == "Manager" %}
+                                        <a href="{% url 'edit_person' person.id %}">
+                                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                        </a>
+                                        <a href="{% url 'delete_person' person.id %}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    {% endif %}
+                                    <a href="{% url 'detail_person' person.id %}">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Aucun résultat</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

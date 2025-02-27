@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{ user.role }} {% block title %}{% endblock %}</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="	sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+	
+</head>
+<body>
+	{% if user.is_authenticated %}
+	<div class="con_perso">
+		<div class="na_perso">
+			<ul>
+				<li>
+					<a href="#">
+						<span class="ico_p">
+							<ion-icon name="logo-apple"></ion-icon>
+						</span>
+						<span class="title_p">ORTM</span>
+					</a>
+				</li>
+				<li>
+					<a href="{% url 'dashboard_admin' %}">
+						<span class="ico_p">
+							<ion-icon name="home-outline"></ion-icon>
+						</span>
+						<span class="title_p">Dashboard</span>
+					</a>
+				</li>
+				<li>
+					<a href="{% url  'person_list' %}">
+						<span class="ico_p">
+							<ion-icon name="people-outline"></ion-icon>
+						</span>
+						<span class="title_p">Employés</span>
+					</a>
+				</li>
+				<li>
+					<a href="{% url  'department_list' %}">
+						<span class="ico_p">
+							<ion-icon name="id-card-outline"></ion-icon>
+						</span>
+						<span class="title_p">Départements</span>
+					</a>
+				</li>
+				<li>
+					<a href="{% url  'pointage_list' %}">
+						<span class="ico_p">
+							<ion-icon name="timer-outline"></ion-icon>
+						</span>
+						<span class="title_p">Pointages</span>
+					</a>
+				</li>
+				<li>
+					<a href="{% url  'shift_list' %}">
+						<span class="ico_p">
+							<ion-icon name="code-outline"></ion-icon>
+						</span>
+						<span class="title_p">Shift</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="ico_p">
+							<ion-icon name="code-outline"></ion-icon>
+						</span>
+						<span class="title_p">Congés</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<span class="ico_p">
+							<ion-icon name="person-circle-outline"></ion-icon>
+						</span>
+						<span class="title_p">Créer utilisateurs</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+
+	<div class="main_p">
+		<div class="topbar_perso">
+			<div class="toggle">
+				<ion-icon name="menu-outline"></ion-icon>		
+			</div>
+			<div class="search_p">
+                    <label>
+                    	<ion-icon name="person-outline"></ion-icon>
+                        <h6> {{ user.username }}</h6>
+                    </label>
+                </div>
+			<div class="user_p">
+					
+						<!-- <h6><ion-icon name="person-outline"></ion-icon> {{ user.username }}</h6> -->
+            			<a href="{% url 'logout_admin' %}" class="btn btn-secondary">Déconnexion(Admin)</a>
+					
+			</div>
+		</div>
+{% endif %}	
+		{% block content %}
+		{% endblock %}	
+
+	</div>
+	
+	<footer>
+        <p>
+            Copyright By Fitahiana
+        </p>
+    </footer>
+	<script src="{% static 'js/main.js' %}"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+</body>
+</html>

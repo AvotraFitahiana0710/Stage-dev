@@ -1,0 +1,56 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Détail Employé
+{% endblock %}
+{% block personnel %}active{% endblock %}
+{% block liste_personnel %}active{% endblock %}
+{% block content %}
+    <h1>Information sur {{ person.first_name }} {{ person.last_name }}</h1>
+    <a href="{% url 'person_list' %}">Retour à la liste</a>
+    <table>
+        <tr>
+            <td>Nom : </td>
+            <td>{{ person.first_name }}</td>
+        </tr>
+        <tr>
+            <td>Prénoms : </td>
+            <td>{{ person.last_name }}</td>
+        </tr>
+        <tr>
+            <td>N° téléphone : </td>
+            <td>{{ person.phone_number }}</td>
+        </tr>
+        <tr>
+            <td>Email : </td>
+            <td>{{ person.email }}</td>
+        </tr>
+        <tr>
+            <td>Statut : </td>
+            <td>{{ person.status }}</td>
+        </tr>
+        <tr>
+            <td>Département: </td>
+            <td>{{ person.department }}</td>
+        </tr>
+        <tr>
+            <td>Date de naissance : </td>
+            <td>{{ person.date_of_birth }}</td>
+        </tr>
+        <tr>
+            <td>N° CIN : </td>
+            <td>{{ person.cin }}</td>
+        </tr>
+        <tr>
+            <td>Titre de job : </td>
+            <td>{{ person.job_title }}</td>
+        </tr>
+        <tr>
+            <td>Adresse exacte : </td>
+            <td>{{ person.address }}</td>
+        </tr>
+
+
+    </table>
+
+{% endblock %}

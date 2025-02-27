@@ -1,0 +1,12 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+	Sign up Administrateur
+{% endblock %}
+{% block content %}
+	<form method="post">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    <button type="submit">Créer un compte</button>
+	</form>
+{% endblock %}

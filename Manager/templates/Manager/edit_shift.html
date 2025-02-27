@@ -1,0 +1,17 @@
+{% extends 'interface_bootstrap.html' %}
+{% load static %}
+{% block title %}
+    Modifier Shift
+{% endblock %} 
+{% block personnel %}active{% endblock %}
+{% block shift %}active{% endblock %}
+{% block content %}
+    <h1>Modifier {{ shift.name }}</h1>
+    <a href="{% url 'shift_list' %}">Retour à la liste</a>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Mettre à jour</button>
+    </form>
+
+{% endblock %}
