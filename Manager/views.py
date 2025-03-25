@@ -157,8 +157,8 @@ def pointage_list(request):
     else:
         pass
     # Passer les employés et départements pour le formulaire de tri
-    return render(request, 'Employee/pointage_employe.html', {
-        # 'records': records,
+    return render(request, 'Manager/pointage_list.html', {
+        'records': records,
         # 'selected_employee': employee_id,
         # 'selected_department': department_id,
         'selected_period': period,
@@ -176,29 +176,55 @@ def add_pointage(request):
     #         return redirect('pointage_list')
     # else:
     #     form = PointageForm()
+    # utilisateur = request.user
+    # personne = getattr(utilisateur, 'employee', None)  # Utilisation de getattr pour éviter les erreurs
+    # if personne is None:
+    #     messages.error(request, "Votre compte n'est pas associé à un employé.")
+    #     return redirect('pointage_list')
+    # if request.method == 'POST':
+    #     form = PointageForm(request.POST)
+    #     if form.is_valid():
+    #         person = utilisateur.employee
+    #         date_pointage = now().date()  # Ajout automatique de la date
+    #         if Pointage.objects.filter(person=person, date_pointage=date_pointage).exists():
+    #             messages.error(request, "Cet employé a déjà un pointage pour aujourd'hui.")
+    #             return redirect('add_pointage')
+
+    #         pointage = form.save(commit=False)
+    #         pointage.person = person
+    #         pointage.date_pointage = date_pointage
+    #         pointage.save()
+    #         messages.success(request, 'Ajout réussi.')
+    #         return redirect('pointage_list')
+
+    # else:
+    #     form = PointageForm()
+    # return render(request, 'Manager/pointage_form.html', {'form': form})
     utilisateur = request.user
-    if not hasattr(utilisateur, 'person'):
+    personne = getattr(utilisateur, 'employee', None)  # Vérifier si l'utilisateur est un employé
+
+    if personne is None:
         messages.error(request, "Votre compte n'est pas associé à un employé.")
-        return redirect('pointage_list')
-    if request.method == 'POST':
-        form = PointageForm(request.POST)
-        if form.is_valid():
-            person = utilisateur.employee
-            date_pointage = now().date()  # Ajout automatique de la date
-            if Pointage.objects.filter(person=person, date_pointage=date_pointage).exists():
-                messages.error(request, "Cet employé a déjà un pointage pour aujourd'hui.")
-                return redirect('add_pointage')
+        return redirect('pointage_list_employe')
 
-            pointage = form.save(commit=False)
-            pointage.person = person
-            pointage.date_pointage = date_pointage
+    date_pointage = now().date()
+    pointage, created = Pointage.objects.get_or_create(
+        person=personne, 
+        date_pointage=date_pointage,
+        defaults={'check_in': now().time()}  # Si c'est le premier pointage du jour, enregistre l'heure d'arrivée
+    )
+
+    if not created:  # Si l'enregistrement existe déjà (check-in fait), on enregistre l'heure de départ
+        if pointage.check_out is None:
+            pointage.check_out = now().time()
             pointage.save()
-            messages.success(request, 'Ajout réussi.')
-            return redirect('pointage_list')
-
+            messages.success(request, "Heure de départ enregistrée avec succès.")
+        else:
+            messages.error(request, "Vous avez déjà enregistré votre heure d'arrivée et de départ aujourd'hui.")
     else:
-        form = PointageForm()
-    return render(request, 'Manager/pointage_form.html', {'form': form})
+        messages.success(request, "Heure d'arrivée enregistrée avec succès.")
+
+    return redirect('pointage_list_employe')  # Redirige après chaque action
  
 def department_list(request):
     departments = Departement.objects.all()

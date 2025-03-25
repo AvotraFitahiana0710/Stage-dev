@@ -36,15 +36,12 @@ def login_employe(request):
                 request.session.save()  
                 return redirect("dashboard_employe")
             else:
-                message = "Ce compte n\'appartient pas à un employé"
+                messages.error(request, 'Ce compte n\'appartient pas à un employé')
             
         else:
-            message = "Nom d'utilisateur ou mot de passe incorrect."
-    else:
-        message = ""
+            messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect.')
 
-    return render(request, 'Accounts/login_user.html', {'message' : message})
-
+    return render(request, 'Employee/login_employe.html')
 
 @login_required(login_url="/login_user/")
 def dashboard_employe(request):
@@ -55,22 +52,11 @@ def dashboard_employe(request):
     # Convertir le numéro du mois en son nom (ex: 2 -> "Février")
     mois_nom = calendar.month_name[mois_en_cours]  # En anglais ("February")
     mois_nom_fr = calendar.month_name[mois_en_cours].capitalize()  # Pour mettre la première lettre en majuscule
-    # Nombre de retards
-    # Nombre de retards pour l'utilisateur connecté
-    # retards = Pointage.objects.filter(
-    #     person=utilisateur.person,  # Correction : "person" au lieu de "utilisateur"
-    #     status="Late",  
-    #     date_pointage__month=mois_en_cours,
-    #     date_pointage__year=annee_en_cours
-    # ).count()
-
-    # # Nombre de jours de congé pris
-    # conges = Conge.objects.filter(
-    #     person=utilisateur.person,  # Correction : "person" au lieu de "utilisateur"
-    #     status="Cong",  
-    #     date_debut__year=annee_en_cours
-    # ).count()
-
+    
+    active_sessions = set(request.session.get('active_users', []))  # Convertit en set
+    active_sessions.add(user.username)  # Ajoute l'utilisateur connecté
+    request.session['active_users'] = list(active_sessions)  # Sauvegarde la session
+    request.session.save()        
     return render(request, 'Employee/dashboard_employe.html', {
         'user': user,
         # 'retards': retards,
@@ -106,30 +92,58 @@ def logout_employe(request):
 #     return redirect('dashboard_employe')
 
 def add_pointage_employe(request):
+    # utilisateur = request.user
+    # # if not hasattr(utilisateur, 'employee'):
+    # #     messages.error(request, "Votre compte n'est pas associé à un employé.")
+    # #     return redirect('pointage_list_employe')
+    # personne = getattr(utilisateur, 'employee', None)  # Utilisation de getattr pour éviter les erreurs
+    # if personne is None:
+    #     messages.error(request, "Votre compte n'est pas associé à un employé.")
+    #     return redirect('pointage_list_employe')
+    # if request.method == 'POST':
+    #     form = PointageForm(request.POST)
+    #     if form.is_valid():
+    #         person = utilisateur.employee
+    #         date_pointage = now().date()  # Ajout automatique de la date
+    #         if Pointage.objects.filter(person=person, date_pointage=date_pointage).exists():
+    #             messages.error(request, "Cet employé a déjà un pointage pour aujourd'hui.")
+    #             return redirect('add_pointage_employe')
+
+    #         pointage = form.save(commit=False)
+    #         pointage.person = person
+    #         pointage.date_pointage = date_pointage
+    #         pointage.save()
+    #         messages.success(request, 'Ajout réussi.')
+    #         return redirect('pointage_list_employe')
+
+    # else:
+    #     form = PointageForm()
+    # return render(request, 'Employee/formulaire_pointage_employe.html', {'form': form})
     utilisateur = request.user
-    if not hasattr(utilisateur, 'person'):
+    personne = getattr(utilisateur, 'employee', None)  # Vérifier si l'utilisateur est un employé
+
+    if personne is None:
         messages.error(request, "Votre compte n'est pas associé à un employé.")
         return redirect('pointage_list_employe')
-    if request.method == 'POST':
-        form = PointageForm(request.POST)
-        if form.is_valid():
-            person = utilisateur.employee
-            date_pointage = now().date()  # Ajout automatique de la date
-            if Pointage.objects.filter(person=person, date_pointage=date_pointage).exists():
-                messages.error(request, "Cet employé a déjà un pointage pour aujourd'hui.")
-                return redirect('add_pointage_employe')
 
-            pointage = form.save(commit=False)
-            pointage.person = person
-            pointage.date_pointage = date_pointage
+    date_pointage = now().date()
+    pointage, created = Pointage.objects.get_or_create(
+        person=personne, 
+        date_pointage=date_pointage,
+        defaults={'check_in': now().time()}  # Si c'est le premier pointage du jour, enregistre l'heure d'arrivée
+    )
+
+    if not created:  # Si l'enregistrement existe déjà (check-in fait), on enregistre l'heure de départ
+        if pointage.check_out is None:
+            pointage.check_out = now().time()
             pointage.save()
-            messages.success(request, 'Ajout réussi.')
-            return redirect('pointage_list_employe')
-
+            messages.success(request, "Heure de départ enregistrée avec succès.")
+        else:
+            messages.error(request, "Vous avez déjà enregistré votre heure d'arrivée et de départ aujourd'hui.")
     else:
-        form = PointageForm()
-    return render(request, 'Employee/formulaire_pointage_employe.html', {'form': form})
- 
+        messages.success(request, "Heure d'arrivée enregistrée avec succès.")
+
+    return redirect('pointage_list_employe')  # Redirige après chaque action
 
 def pointage_list_employe(request):
     
@@ -173,9 +187,7 @@ def pointage_list_employe(request):
         pass
     # Passer les employés et départements pour le formulaire de tri
     return render(request, 'Employee/pointage_employe.html', {
-        # 'records': records,
-        # 'selected_employee': employee_id,
-        # 'selected_department': department_id,
+        'records': records,
         'selected_period': period,
         'selected_date': selected_date,
         'start_date': start_date,

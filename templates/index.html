@@ -15,14 +15,14 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"  />
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="masthead">
-            <div class="container px-5">
+            <div class="container px-5 py-5">
                 <div class="row gx-5 align-items-center">
                     <div class="col-lg-6">
                         <!-- Mashead text and app badges-->
@@ -30,8 +30,8 @@
                             <h1 class="display-3 lh-1 mb-3">Système de suivi des heures de travail des employés.</h1>
                             <p class="lead fw-normal text-muted mb-5">Une application web permettant de suivre les heures de travail des employés à l'aide des pointages automatisés.</p>
                             <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
-                                <a class="me-lg-3 mb-4 mb-lg-0 btn-dark" href="{% url 'login_employe' %}"><img class="app-badge" src="" alt="..." />Connexion en tant qu'employé</a>
-                                <a class="me-lg-3 mb-4 mb-lg-0 ml-2 btn-dark" href="{% url 'login_user' %}"><img class="app-badge" src="" alt="..." />Connexion en tant que Manager</a>
+                                <a class="me-lg-3 mb-4 mb-lg-0 btn btn-dark" href="{% url 'login_employe' %}"><i class="fa-solid fa-user-tie"></i> Connexion en tant qu'employé</a>
+                                <a class="me-lg-3 mb-4 mb-lg-0 ml-2 btn btn-dark" href="{% url 'login_user' %}"><i class="fa-solid fa-user-tie"></i> Connexion en tant que Manager</a>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,8 @@
                                 </div>
                             </div> -->
                             <!-- <img src="{% static 'img/ORTM.png' %}"> -->
-                            <img src="{% static 'img/logo_ORTM.JPG' %}">
+                            <!-- <img src="{% static 'img/logo_ORTM.JPG' %}"> -->
+                            <img src="https://static.wikia.nocookie.net/logopedia/images/2/2d/ORTM_%28Madagascar%29_Logo.png/revision/latest?cb=20211122094706">
                         </div>
                     </div>
 

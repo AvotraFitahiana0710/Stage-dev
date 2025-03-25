@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Charger les variables depuis .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -109,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'fr-fr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC+3'
 
 USE_I18N = True
 
@@ -162,3 +167,15 @@ SESSION_COOKIE_NAME = "sessionid" #changer le nom du cookie pour éviter l'écra
 CSRF_COOKIE_SECURE = False  # Mettre True en production si HTTPS est activé
 SESSION_COOKIE_SECURE = False  # Idem
 CSRF_USE_SESSIONS = True
+
+
+
+# pour l'option mot de passe oublié
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Serveur SMTP de ton fournisseur (ex: Gmail)
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  # Remplace par ton adresse e-mail
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Remplace par ton mot de passe (ou utilise un App Password si Gmail)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

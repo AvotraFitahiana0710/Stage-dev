@@ -78,7 +78,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Concernant les personnels:</h6>
+                        <h6 class="collapse-header">Personnels:</h6>
                         <a class="collapse-item {% block liste_personnel %}{% endblock %}" href="{% url 'person_list' %}">Liste des personnels</a>
                         <a class="collapse-item {% block pointage %}{% endblock %}" href="{% url 'pointage_list' %}">Pointages</a>
                         <a class="collapse-item {% block shift %}{% endblock %}" href="{% url 'shift_list' %}">Shifts</a>
@@ -91,13 +91,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fa fa-th"></i>
-                    <span>Départements</span>
+                    <span>Services</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Concernant les départements:</h6>
-                        <a class="collapse-item {% block liste_departement %}{% endblock %}" href="{% url 'department_list' %}">Listes des départements</a>
+                        <h6 class="collapse-header">Services:</h6>
+                        <a class="collapse-item {% block liste_departement %}{% endblock %}" href="{% url 'department_list' %}">Listes des services</a>
                     </div>
                 </div>
             </li>
@@ -108,23 +108,6 @@
             <!-- Heading -->
             
         
-            {% if user.role == "Admin" %}
-            <!-- Nav Item - Tables -->
-            <li class="nav-item {% block utilisateur %}{% endblock %}">
-                <a class="nav-link" href="{% url 'create_user' %}">
-                    <!-- <i class="fas fa-fw fa-table"></i> -->
-                    <i class="fa fa-plus-circle"></i>
-
-                    <span>Créer utilisateurs</span></a>
-            </li>
-            <hr class="sidebar-divider d-none d-md-block">
-            <li class="nav-item {% block rapport %}{% endblock %}">
-                <a class="nav-link" href="{% url 'rapport_pointage' %}">
-                    <i class="fa fa-calendar"></i>
-                    <span>Rapport de pointage</span></a>
-            </li>
-            <hr class="sidebar-divider d-none d-md-block">
-            {% endif %}
             <!-- Divider -->
             
 

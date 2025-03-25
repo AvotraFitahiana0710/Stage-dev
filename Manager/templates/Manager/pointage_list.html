@@ -1,4 +1,4 @@
-{% extends 'interface_bootstrap.html' %}
+{% extends 'base_user.html' %}
 {% load static %}
 {% block title %}
     Liste des pointages
@@ -11,7 +11,7 @@
         {% endfor %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1>Pointage</h1>
-        <a href="{% url 'add_pointage' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Nouvel enregistrement</a>
+        <a href="{% url 'add_pointage' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Enregistrer pointage</a>
     </div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         {% if start_date and end_date %}

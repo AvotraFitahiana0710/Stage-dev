@@ -19,7 +19,9 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-6 d-none d-lg-block py-5">
+                        <img src="https://static.wikia.nocookie.net/logopedia/images/2/2d/ORTM_%28Madagascar%29_Logo.png/revision/latest?cb=20211122094706">
+                    </div>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -45,9 +47,9 @@
                                             id="password2" placeholder="Repeat Password" name="password2" required>
                                     </div>
                                 </div>
-                                {% if message %}
-                                    <div class="alert alert-danger">{{ message }}</div>
-                                {% endif %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                                {% endfor %}
                                 <input type="submit" class="btn btn-primary btn-user btn-block" value="Enregistrer" />
                             </form>
                             

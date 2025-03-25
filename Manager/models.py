@@ -24,7 +24,7 @@ class Pointage(models.Model):
     ]
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='Pointage')
     date_pointage = models.DateField(verbose_name="Date du pointage", auto_now_add=True)
-    shift = models.ForeignKey(Shift, on_delete=models.CASCADE)#comparaison avec Shift pour heure sup ou sanction
+    shift = models.ForeignKey(Shift, on_delete=models.CASCADE, null=True, blank=True)#comparaison avec Shift pour heure sup ou sanction
     check_in = models.TimeField(null=True, blank=True, verbose_name="Heure d'entrée")
     check_out = models.TimeField(null=True, blank=True, verbose_name="Heure de sortie")
     hours_worked = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name="Heures travaillées")
@@ -41,7 +41,7 @@ class Pointage(models.Model):
             check_in_datetime = datetime.combine(self.date_pointage, self.check_in)
             check_out_datetime = datetime.combine(self.date_pointage, self.check_out)
             total_hours = (check_out_datetime - check_in_datetime).total_seconds() / 3600  # Convertir en heures
-            total_hours -= float(self.person.department.break_duration if self.person.department else 0)  # Retirer la pause si applicable
+            # total_hours -= float(self.person.department.break_duration if self.person.department else 0)  # Retirer la pause si applicable
             self.hours_worked = max(total_hours, 0)  # Éviter les valeurs négatives
         super().save(*args, **kwargs)
 

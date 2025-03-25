@@ -43,7 +43,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Département{% if nbr_department > 1 %}s{% endif %}</div>
+                                Service{% if nbr_department > 1 %}s{% endif %}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ nbr_department }}</div>
                         </div>
                         <div class="col-auto">
@@ -53,7 +53,6 @@
                 </div>
             </div>
         </div>
-        {% if user.role == "Admin" %}
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-dark shadow h-100 py-2">
                 <div class="card-body">
@@ -80,15 +79,13 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ connected_users }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fa-regular fa-user fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div> 
-        {% endif %}   	
     </div>
-    {% if user.role == "Admin" %}
     <h3>Utilisateurs actuellement connectés :</h3>
     <div class="row">
         <ul>
@@ -100,7 +97,6 @@
         </ul>
                 <!-- Statistiques des comptes. Exemple nombre des comptes admin, manager et employé, graphe ou figurepour une belle vue -->
     </div>
-    {% endif %}
     <!-- <div>
         <p id="total-accounts">Nombre total de comptes : {{ nbr_account }}</p>
         <p id="admin-count">Nombre d'Admins : {{ nbr_admins }}</p>
